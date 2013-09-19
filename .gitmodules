@@ -1,0 +1,6 @@
+[submodule "neco-ghc"]
+	path = neco-ghc
+	url = https://github.com/ujihisa/neco-ghc.git
+[submodule "ghcmod-vim"]
+	path = ghcmod-vim
+	url = https://github.com/eagletmt/ghcmod-vim.git
