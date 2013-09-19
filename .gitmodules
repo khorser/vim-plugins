@@ -4,3 +4,51 @@
 [submodule "ghcmod-vim"]
 	path = ghcmod-vim
 	url = https://github.com/eagletmt/ghcmod-vim.git
+[submodule "NrrwRgn"]
+	path = NrrwRgn
+	url = https://github.com/chrisbra/NrrwRgn.git
+[submodule "quickfixsigns_vim"]
+	path = quickfixsigns_vim
+	url = https://github.com/tomtom/quickfixsigns_vim.git
+[submodule "vim-mark-tools"]
+	path = vim-mark-tools
+	url = https://github.com/khorser/vim-mark-tools.git
+[submodule "tagbar"]
+	path = tagbar
+	url = https://github.com/majutsushi/tagbar.git
+[submodule "csv.vim"]
+	path = csv.vim
+	url = https://github.com/chrisbra/csv.vim.git
+[submodule "vim-rst-ftplugin"]
+	path = vim-rst-ftplugin
+	url = https://github.com/khorser/vim-rst-ftplugin.git
+[submodule "vim-northsky"]
+	path = vim-northsky
+	url = https://github.com/khorser/vim-northsky.git
+[submodule "patchreview-vim"]
+	path = patchreview-vim
+	url = https://github.com/junkblocker/patchreview-vim.git
+[submodule "neocomplcache.vim"]
+	path = neocomplcache.vim
+	url = https://github.com/Shougo/neocomplcache.vim.git
+[submodule "neocomplete.vim"]
+	path = neocomplete.vim
+	url = https://github.com/Shougo/neocomplete.vim.git
+[submodule "vimproc"]
+	path = vimproc
+	url = https://github.com/Shougo/vimproc.git
+[submodule "vimtodo"]
+	path = vimtodo
+	url = https://github.com/mivok/vimtodo.git
+[submodule "undotree"]
+	path = undotree
+	url = https://github.com/mbbill/undotree.git
+[submodule "vim-repl"]
+	path = vim-repl
+	url = https://github.com/khorser/vim-repl.git
+[submodule "vim2hs"]
+	path = vim2hs
+	url = https://github.com/dag/vim2hs.git
+[submodule "vcscommand"]
+	path = vcscommand
+	url = http://repo.or.cz/r/vcscommand.git
