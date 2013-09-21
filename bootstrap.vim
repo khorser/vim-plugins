@@ -18,53 +18,62 @@ function! SplitPath(fname)
 endfunction
 
 
-function! BuildPluginDir(dir, plugins)
+function! BuildPluginDir(root, plugins)
   let plugfiles = {}
   let allfiles = {}
   let alldirs = {}
-  for plugin in a:plugins
-    let plugfiles[plugin] = filter(map(glob(plugin.'/**', 0, 1), 'SplitPath(v:val)'), '!empty(v:val)')
-    for f in plugfiles[plugin]
-      let path = join(f, '/')
-      if exists('allfiles["'.path.'"]')
-        call add(allfiles[path], plugin)
+  for p in a:plugins
+    let paths = filter(map(glob(p.'/**', 0, 1), 'SplitPath(v:val)'), '!empty(v:val)')
+    for pa in paths
+      let alldirs[join(pa[:-2], '/')] = 1
+    endfor
+    let plugfiles[p] = map(copy(paths), "join(v:val, '/')")
+    for f in plugfiles[p]
+      if exists('allfiles["'.f.'"]')
+        call add(allfiles[f], p)
       else
-        let allfiles[path] = [plugin]
+        let allfiles[f] = [p]
       endif
-      let dir = join(f[:-2], '/')
-      let alldirs[dir] = 1
     endfor
   endfor
+  unlet f
+  unlet p
   let conflicts = filter(copy(allfiles), 'len(v:val) > 1')
   if !empty(conflicts)
     echoerr "Conflicting entries found:" string(conflicts)
   else
-    let dir = strftime(a:dir)
     for d in keys(alldirs)
-      let dd = dir.'/'.d
+      let dd = a:root.'/'.d
       if !isdirectory(dd)
         call mkdir(dd, 'p')
       endif
     endfor
-    for [plugin, files] in items(plugfiles)
-      for f in files
-        let name = join(f, '/')
-        call writefile(readfile(plugin.'/'.name), dir.'/'.name)
-      endfor
+    unlet d
+    for [f, p] in items(allfiles)
+      call writefile(readfile(p[0].'/'.f), a:root.'/'.f)
     endfor
+    unlet f
+    unlet p
+    let del = []
+    for [p, fs] in items(plugfiles)
+      call add(del, '" '.p)
+      call extend(del, map(copy(fs), '"call delete(\"".v:val."\")"'))
+    endfor
+    call writefile(del, a:root.'-uninstall.vim')
   endif
 endfunction
 
+
+let g:plugins = {'Lazy' : ['undotree', 'vcscommand']
+  \, 'Own' : ['vim-mark-tools', 'vim-northsky', 'vim-repl', 'vim-rst-ftplugin']
+  \, 'Haskell' : ['ghcmod-vim', 'neco-ghc', 'neocomplete.vim', 'vim2hs', 'vimproc']
+  \, 'Utils' : ['csv.vim', 'NrrwRgn', 'patchreview-vim', 'quickfixsigns_vim', 'tagbar', 'vimtodo']}
+
+
 function! BuildPlugins()
-  call BuildPluginDir('Plugins%Y%m%d%H%M%S', ['csv.vim', 'ghcmod-vim', 'neco-ghc',
-    \ 'neocomplete.vim', 'NrrwRgn', 'patchreview-vim', 'quickfixsigns_vim',
-    \ 'tagbar', 'vim2hs', 'vimproc', 'vimtodo',
-    \ 'vim-mark-tools', 'vim-northsky', 'vim-repl', 'vim-rst-ftplugin'])
-endfunction
-
-
-function! BuildLazyPlugins()
-  call BuildPluginDir('LazyPlugins%Y%m%d%H%M%S', ['undotree', 'vcscommand'])
+  for [dir, plist] in items(g:plugins)
+    call BuildPluginDir(strftime('%Y%m%d%H%M%S').'/'.dir, plist)
+  endfor
 endfunction
 
 " vim: set ft=vim sw=2 sts=2 ts=8 et:
