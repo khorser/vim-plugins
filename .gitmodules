@@ -55,3 +55,18 @@
 [submodule "haskellmode-vim"]
 	path = haskellmode-vim
 	url = https://github.com/lukerandall/haskellmode-vim.git
+[submodule "vim-haskellFold"]
+	path = vim-haskellFold
+	url = https://github.com/Twinside/vim-haskellFold.git
+[submodule "vim-hoogle"]
+	path = vim-hoogle
+	url = https://github.com/Twinside/vim-hoogle.git
+[submodule "lushtags"]
+	path = lushtags
+	url = https://github.com/bitc/lushtags.git
+[submodule "vim-hdevtools"]
+	path = vim-hdevtools
+	url = https://github.com/bitc/vim-hdevtools.git
+[submodule "hdevtools"]
+	path = hdevtools
+	url = https://github.com/bitc/hdevtools.git
