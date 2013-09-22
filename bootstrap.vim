@@ -23,6 +23,10 @@ function! BuildPluginDir(root, plugins)
   let allfiles = {}
   let alldirs = {}
   for p in a:plugins
+    if !isdirectory(p)
+      echoerr "Directory does not exist:" p
+      return
+    endif
     let paths = filter(map(glob(p.'/**', 0, 1), 'SplitPath(v:val)'), '!empty(v:val)')
     for pa in paths
       let alldirs[join(pa[:-2], '/')] = 1
@@ -64,11 +68,14 @@ function! BuildPluginDir(root, plugins)
 endfunction
 
 
-let g:plugins = {'Lazy' : ['undotree', 'vcscommand']
-  \, 'Own' : ['vim-mark-tools', 'vim-northsky', 'vim-repl', 'vim-rst-ftplugin']
-  \, 'Haskell' : ['ghcmod-vim', 'neco-ghc', 'neocomplete.vim', 'vim2hs', 'vimproc']
-  \, 'Utils' : ['csv.vim', 'NrrwRgn', 'patchreview-vim', 'quickfixsigns_vim', 'tagbar', 'vimtodo']}
+"let g:plugins = {'Lazy' : ['undotree', 'vcscommand']
+"  \, 'Own' : ['vim-mark-tools', 'vim-northsky', 'vim-repl', 'vim-rst-ftplugin']
+"  \, 'Haskell' : ['ghcmod-vim', 'neco-ghc', 'neocomplete.vim', 'vim2hs', 'vimproc']
+"  \, 'Utils' : ['csv.vim', 'NrrwRgn', 'patchreview-vim', 'quickfixsigns_vim', 'tagbar', 'vimtodo']}
 
+let g:plugins = {'NeoComplCache' : ['neocomplcache.vim']
+  \, 'ghcmod' : ['ghcmod-vim', 'neco-ghc', 'vimproc']
+  \, 'vim2hs' : ['vim2hs']}
 
 function! BuildPlugins()
   for [dir, plist] in items(g:plugins)
